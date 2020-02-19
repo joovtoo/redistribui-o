@@ -1,0 +1,100 @@
+en
+conf t
+router ospf 1
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.4 0.0.0.3 area 0
+
+en
+conf t
+router ospf 1
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+
+en
+conf t
+router ospf 1
+network 10.0.0.0 0.0.0.3 area 0
+network 10.0.0.8 0.0.0.3 area 0
+network 10.0.0.12 0.0.0.3 area 0
+
+en
+conf t
+router ospf 1
+network 10.0.0.12 0.0.0.3 area 0
+exit
+router rip
+version 2
+no auto-summary
+network 20.0.0.0
+exit
+router rip
+redistribute ospf 1 metric 1
+exit
+router ospf 1
+redistribute rip subnets
+do wr
+
+
+en
+conf t
+router rip
+version 2
+no auto-summary
+network 20.0.0.8
+do wr
+
+en
+conf t
+router rip
+version 2
+no auto-summary
+network 20.0.0.8
+network 20.0.0.0
+network 20.0.0.4
+network 20.0.0.12
+do wr
+
+en
+conf t
+router rip
+version 2
+no auto-summary
+network 20.0.0.12
+do wr
+
+en
+conf t
+router rip
+version 2
+no auto-summary
+network 20.0.0.4
+exit
+router eigrp 1
+network 30.0.0.0 0.0.0.3
+exit
+router eigrp 1
+redistribute metric r
+do wr
+
+
+en
+conf t
+router eigrp 1
+network 30.0.0.0 0.0.0.3
+network 30.0.0.8 0.0.0.3
+network 30.0.0.4 0.0.0.3
+do wr
+
+en
+conf t
+router eigrp 1
+network 30.0.0.12 0.0.0.3
+network 30.0.0.4 0.0.0.3
+do wr
+
+en
+conf t
+router eigrp 1
+network 30.0.0.12 0.0.0.3
+network 30.0.0.8 0.0.0.3
+do wr
